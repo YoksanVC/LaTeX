@@ -1,0 +1,146 @@
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+
+\addbibresource{bibliografias.bib}
+
+\makeatletter
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{palatino}
+\pagenumbering{gobble}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\begin{flushleft}
+\begin{tabular}{|l|l|}
+\hline 
+ & \tabularnewline
+\textbf{\large{}Instituto Tecnol\'{o}gico de Costa Rica} & QUIZ 1\tabularnewline
+\textbf{\large{}Escuela de Computaci\'{o}n} & Entrega: Domingo 28 de Abril, a trav\'{e}s del TEC digital\tabularnewline
+ & Debe subir un \emph{pdf }con la respuesta,\tabularnewline
+Programa en Ciencias de Datos & generado con latex (adjunte los archivos .tex asociados).\tabularnewline
+\textbf{Curso: Estadistica} & \tabularnewline
+ & \tabularnewline
+Profesor: Ph. D. Sa\'{u}l Calder\'{o}n Ram\'{\i}rez & Valor: 100 pts.\tabularnewline
+ & Puntos Obtenidos: \_\_\_\_\_\_\_\_\_\_\_\_\tabularnewline
+ & \tabularnewline
+ & \tabularnewline
+ & Nota: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\tabularnewline
+ & \tabularnewline
+\cline{2-2} 
+\multicolumn{2}{|c|}{}\tabularnewline
+\multicolumn{2}{|l|}{Nombre del (la) estudiante: \underline{Yoksan Varela Cambronero}}\tabularnewline
+\multicolumn{1}{|l}{} & \tabularnewline
+\multicolumn{1}{|l}{Carn\'{e}: \underline{206100530}} & \tabularnewline
+\multicolumn{1}{|l}{} & \tabularnewline
+\hline 
+\end{tabular}
+\par\end{flushleft}
+\begin{enumerate}
+\item Seg\'{u}n la charla del Dr. Alexandre Chiavegatto, responda las siguientes
+preguntas:
+\begin{enumerate}
+\item \textbf{(10 puntos)} Qu\'{e} diferencia hay entre la Inteligencia
+Artificial cl\'{a}sica y la contempor\'{a}nea?
+
+\begin{enumerate}
+    \item \textbf{Inteligencia Artificial Cl\'{a}sica:}
+La toma de decisiones esta dada por reglas creadas por los humanos, reglas que fueron creadas una vez que el fen\'{o}meno en cuesti\'{o}n fue estudiado y comprendido. Entre los ejemplos que el Dr. Chiavegatto mencion\'{o} est\'{a}n: encontrar spam a trav\'{e}s de una palabra clave, hacer una traducci\'{o}n de una frase utilizando reglas de los diccionarios, e indeficar caras humanas bas\'{a}ndose en la forma de la nariz, ojos y boca.\\
+    \item \textbf{Inteligencia Artificial Contempor\'{a}nea:}
+Consiste en que el aprendizaje autom\'{a}tico se basa en que las decisiones o reglas se aprenden a trav\'{e}s de los datos, de los patrones y relaciones que estos tienen con el fen\'{o}meno en estudio. La toma de decisiones se basa en identificar patrones complejos de los datos, y la analog\'{i}a que se us\'{o} en este punto es que esta es la forma en la que un ni\~{n}o aprende.\\
+\end{enumerate}
+
+
+\item \textbf{(10 puntos)} Cu\'{a}les son las razones de la irrupci\'{o}n
+a gran escala del aprendizaje autom\'{a}tico?
+
+De acuerdo con el Dr. Chiavegatto, el aprendizaje autom\'{a}tico ha irrumpido a gran escala por las siguientes 3 razones que se listan abajo, las cuales no se van a detener y van a seguir creciendo y mejorando:
+\begin{enumerate}
+    \item \textbf{La cantidad de datos a disposici\'{o}n:}
+Es claro que los algoritmos de aprendizaje autom\'{a}tico necesitan aprender "desde cero", dado que no tiene un aprendizaje anterior. Con la cantidad de datos que existe hoy, es mucho m\'{a}s f\'{a}cil poder entrenar estos modelos y obtener buenos rendimientos.\\
+    \item \textbf{Poder computacional:}
+Las operaciones que estos algoritmos de aprendizaje autom\'{a}tico realizan para aprender son complejas, y requieren de arquitecturas dise\~{n}adas con ese prop\'{o}sito. Hoy en d\'{i}a ya se cuenta con mucha m\'{a}s dispocisi\'{o}n de estos recursos.\\
+    \item \textbf{Nuevos algoritmos para problemas m\'{a}s complejos:}
+Los avances cientif\'{i}cos son cada vez mayores debido a que muchos profesiones se est\'{a}n preparando en el \'{a}rea, creaci\'{o}n de centros de investigaci\'{o}n, inversiones enormes del sector p\'{u}blico y privado. Todo este desarrollo de personas y conocimiento esta dando lugar a nuevos algoritmos cada vez m\'{a}s complejos que nos ayudan con los escenarios m\'{a}s retadores.\\
+\end{enumerate}
+\item \textbf{(10 puntos)} Cu\'{a}l es la contribuci\'{o}n m\'{a}s importante
+a las t\'{e}cnicas de aprendizaje autom\'{a}tico hasta la fecha?
+
+Para Alexandre, la la contribuci\'{o}n m\'{a}s importante a las t\'{e}cnicas de aprendizaje autom\'{a}tico hasta la fecha ha sido la creaci\'{o}n de los \textit{Transformers}, lo cual sucedi\'{o} en el 2018; los cuales son los fundamentos o bases donde se han creado soluciones como \textit{ChatGPT} y otras basadas en Inteligencia Artificial Generativa.\\
+
+La raz\'{o}n del por qu\'{e} el Dr. Chiavegatto considera que es el aporte m\'{a}s importante a la fecha es el hecho que esta tecnolog\'{i}a cambi\'{o} la forma de impartir lecciones, de estudiar, de redactar correos y muchas otras cosas m\'{a}s.\\
+
+\item \textbf{(20 puntos)} Explique e investigue, usando como referencias
+publiaciones del Dr. Chiavegatto, en qu\'{e} consiste la primer aplicaci\'{o}n
+mostrada?
+
+La primera aplicaci\'{o}n mostrada consisti\'{o} en encontrar una forma que un aprendizaje autom\'{a}tico fuera capaz de evitar el esparcimiento de una enfermedad infecciosa.\\
+
+Para la parte de prevenci\'{o}n se querian plantear dos tipos de alertas:
+\begin{enumerate}
+    \item Monitoreo en redes sociales para detectar nuevos s\'{i}ntomas o enfermedades.
+    \item Identificaci\'{o}n de nuevos o inesperados s\'{i}ntomas dentro del los servicios de salud.\\
+\end{enumerate}
+
+Dentro de este marco, se hicieron varios desarrollos y experimentos con COVID-19, donde el objetivo fundamental del primer ejemplo mostrado por el Dr. Chiavegatto (\cite{Chiavegatto_COVID}) era determinar la prognosis de la enfermedad dentro de 3 posibles alternativas: el paciente va a necesitar ventilaci\'{o}n mec\'{a}nica, una UCI (unidad de cuidados intensivos por sus siglas en ingl\'{e}s), o si el paciente iba a morir a raiz de la enfermedad. Todos los casos estudiados provienen de pacientes del hospital de S\~{a}o Paulo, Brasil.\\
+
+En \cite{Chiavegatto_COVID} se muestra el desarrollo de 5 soluciones de aprendizaje autom\'{a}tico: redes neuronales artificiales, extra tree, Random Forest, catboost y Extreme Gradient Boosting). Al final de este documento se desmuestra que todas las soluciones obtuvieron un AUC-ROC promedio de 0.92 a la hora de determinar la prognosis de los pacientes en el estudio. \\
+
+
+\item \textbf{(20 puntos)} Explique en qu\'{e} consiste(n) y como funciona(n)
+las m\'{e}tricas utilizadas para este primer proyecto?
+
+Como se explica en \cite{AUCROCWebSite}, es vital poder medir el rendimiento de un algoritmo de aprendizaje autom\'{a}tico, y cuando se trata de un problema de clasificaci\'{o}n, la m\'{e}trica AUC-ROC es una de las m\'{a}s importantes.\\
+
+Algunos conceptos importantes para poder entender esta m\'{e}trica a cabalidad:
+\begin{enumerate}
+    \item \textbf{Sensibilidad (Sensitibity):} Tambi\'{e}n conocido como Recall o \textbf{True Positive Rate (TPR)}, y se refiere a la capacidad de un modelo en detectar positivos verdaderos, es decir, que tan bien el modelo reconoce cuando un elemento pertene a una clase.
+    \item \textbf{Especifidad (Specificity):} Se refiere a la habilidad de un modelo de detectar negativos verdaderos, es decir, que tan bien el modelo es capaz de determinar cuando un elemento NO pertenece a una clase.
+    \item \textbf{False Positive Rate (FPR):} Traducido como Raz\'{o}n de Falsos Positivos, es una m\'{e}trica que nos dice cuantos elementos son falsos positivos, o dicho de otra forma, que tanto el modelo clasifica de forma err\'{o}nea un elemento de una clase en la otra. A esta m\'{e}trica que se conoce tambi\'{e}n como la raz\'{o}n de falsa alarma. Se necesita de la Especifidad de una modelo para poder calcular el FPR, dando que $FPR = 1 - Especifidad$\\
+\end{enumerate}
+
+Ahora bien, tanto TPR como FPR varian de 0 a 1, donde 1 representa un funcionamiento perfecto del modelo en ese criterio. Es posible hacer una gr\'afica entre TPR y FPR, donde la TPR es el eje Y y la FPR es el eje X. A la curva que se genera al graficar TPR en funci\'{o}n de FPR se le conoce como ROC (Receiver Operating Characteristic).\\
+
+Ya con este concepto claro, se puede explicar que es el \'{A}rea Bajo la Curva, o bien, AUC por sus siglas en ingl\'{e}s (Area Under Curve): Esta m\'{e}trica se refiere al \'{a}rea bajo la curva ROC. En un escenario perfecto, un modelo de aprendizaje autom\'{a}tico tendr\'{i}a un AUC = 1, y eso implica que le modelo puede separar una clase de la otra de forma ideal.\\
+
+2008
+Con esto se puede concluir que entre m\'{a}s cerca de 1 este el AUC, mejor la capacidad de categorizaci\'{o}n del modelo. Para finalizar sobre este punto, algunas conclusiones m\'{a}s sobre el AUC:
+\begin{enumerate}
+    \item Si el AUC es cercano o igual 0.5, indica que el modelo no es capaz de diferencia entre las clases en estudio.
+    \item Si el AUC es cercano o igual a 0, indica que el modelo esta haciendo una categorizaci\'{o}n inversa, es decir, los elementos de la clase 1 los clasifica dentro de la clase 2, y vicerversa.
+    \item Si se tienen 3 o m\'{a}s categor\'{i}as, se tiene varias curvas ROC, por lo tanto, varios AUC que deben ser analizados por separado.\\
+\end{enumerate}
+
+\item \textbf{(30 puntos)} Relacione y explique, con los conceptos vistos
+en clase hasta la fecha, el porqu\'{e} de la necesidad de aplicar
+t\'{e}cnicas de \emph{aprendizaje por transferencia }seg\'{u}n lo
+expuesto por el Dr. Chiavegatto en problemas reales donde se usa el
+aprendizaje autom\'{a}tico?
+
+El concepto de aprendizaje por transferencia hace referencia a la acci\'{o}n de reutilizar modelos previamente entrenados para contruir nuevos modelos. Por lo visto en clase, el nuevo conocimiento, normalmente, no sale de la nada ni es una inspiraci\'{o}n "divina", por el contrario, es el resultado de la suma del colectivo del conocimiento adquirido lo que da pie a avances en cualquier \'{a}rea, especialmente en la ciencia.\\
+
+Kittler y Bayes son un perfecto ejemplo de estos casos: modelos b\'{a}sicos, conceptos puntuales que fundamentaron modelos de mayor complejidad para situaciones cada vez m\'{a}s demandantes. En el caso del Dr. Chiavegatto: como un modelo desarrollado en un hospital podria funcionar muy bien dentro de otro hospital, y ser mejorado en ese proceso. Esto es un aspecto clave para que el impacto del aprendizaje autom\'{a}tico crezca dentro del \'{a}rea de la salud.\\
+
+Es por eso que siempre existir\'{a} una necesidad de seguir creando conocimiento, de seguir apoy\'{a}ndose en la bases que otros han sentado para continuar creciendo, y es por eso que Alexandre lo dijo claro: es uno de los 3 elementos que han hecho que esta tecnolog\'{i}a crezca exponencialmente, y que nunca se va a detener.
+
+\end{enumerate}
+\end{enumerate}
+
+\printbibliography[
+heading=bibintoc,
+title={Bibliograf\'{i}a}
+]
+
+\end{document}
