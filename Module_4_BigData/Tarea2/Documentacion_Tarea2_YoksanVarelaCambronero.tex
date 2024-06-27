@@ -46,21 +46,28 @@ Dentro del archivo comprimido se encuentran, adem\'{a}s de este documento, los s
 \begin{enumerate}
     \item \textbf{Folder datasets:} Contiene los cinco archivos YAML solicitados en la secci\'{o}n "Datos de Entrada" del enunciado de la tarea 2. Estos fueron creados usando ChatGPT y con algunos ajustes manuales, usando como referencia el ejemplo provisto en el instructivo de la tarea.
 
-    Cada uno de estos archivos hace referencia a una caja regustradora distinta, con al menos 10 compras y con una variedad de productos de supermercado. Para efectos de esta tarea, los archivos no cuenta informaci\'{o}n incompleta en las secciones requeridas. Por efecto de tiempo, no se pudo realizar la parte opcional de la tarea, por lo tanto, estos son todos los archivos YAML a ser usados en la ejecuci\'{o}n de la tarea.
+    Cada uno de estos archivos hace referencia a una caja registradora distinta, con al menos 10 compras y con una variedad de productos de supermercado. Para efectos de esta tarea, los archivos no cuenta informaci\'{o}n incompleta en las secciones requeridas. Por efecto de tiempo, no se pudo realizar la parte opcional de la tarea, por lo tanto, estos son todos los archivos YAML a ser usados en la ejecuci\'{o}n de la tarea.
     
-    \item \textbf{Folder library:} Este folder contiene 5 archivos de Python que contienen todas funciones utilizadas a lo largos del c\'{o}digo MAIN. En la secci\'{o}n \textit{Funciones y sus respectivas Prueba Unitarias} de este documento se explica con m\'{a}s detalle las funciones y las pruebas unitarias asociadas a las mismas. 
+    \item \textbf{Folder library:} Este folder contiene 4 archivos de Python que contienen todas funciones utilizadas a lo largos del c\'{o}digo MAIN. En la secci\'{o}n \textit{Funciones y sus respectivas Prueba Unitarias} de este documento se explica con m\'{a}s detalle las funciones y las pruebas unitarias asociadas a las mismas. 
     
     \item \textbf{Folder unitary\_tests:} De firma an\'{a}loga al folder anterior, en este se almacenan todas las pruebas unitarias para las funciones mencionadas anteriormente. Para m\'{a}s informaci\'{o}n detallada sobre estas funciones, referirse a la secci\'{o}n \textit{Funciones y sus respectivas Prueba Unitarias}.
+
+    \item \textbf{Folder Results:} Este folder no existe dentro del archivo comprimido, pero ser\'{a} generado por el c\'{o}digo MAIN a la hora de su ejecuci\'{o}n. Este va a contener los archivos CSV solicitados en la tarea, pero podr\'{i}an estar corruptos. Para mayor detalle, ver nota importante en el primer punto en la secci\'{o}n \textit{Decisiones de dise\~{n}o de la soluci\'{o}n}.
     
-    \item \textbf{Archivo Big Data - Tarea 1.pdf:} Enunciado de la tarea provisto por el profesor.
+    \item \textbf{Archivo Big Data - Tarea 2.pdf:} Enunciado de la tarea provisto por el profesor.
     
-    \item \textbf{Archivo build\_run\_docker.bat:} Este documento fue creado para facilitar la creaci\'{o}n y la ejecuci\'{o}n del contenedor de Docker en mi computadora personal, la cual cuenta con el OS Windows 11. Internamente, este archivo tiene las siguentes l\'{i}neas: \textit{ docker build --tag tarea1\_yoksanvarela .} y \textit{ docker run -i -t tarea1\_yoksanvarela /bin/bash}.
+    \item \textbf{Archivo build\_run\_docker.bat:} Este documento fue creado para facilitar la creaci\'{o}n y la ejecuci\'{o}n del contenedor de Docker en mi computadora personal, la cual cuenta con el OS Windows 11. Internamente, este archivo tiene las siguentes l\'{i}neas: \textit{ docker build --tag tarea2\_yoksanvarela .} y \textit{ docker run -i -t tarea2\_yoksanvarela /bin/bash}.
     
     \item \textbf{Archivo command\_list.txt:} Es un archivo plano de texto que contiene las l\'{i}neas necesarias para poder correr el programa principal y las pruebas unitarias. Cabe la pena rescatar que estos comandos hay que correrlos de forma manual en la consola del contenedor de Docker, y son los mismos comandos que se citan en la secci\'{o}n \textit{Ejecuci\'{o}n del MAIN y las Pruebas Unitarias}.
     
-    \item \textbf{Archivo Dockerfile:} Es la imagen usada en Docker, misma imagen provista por el profesor.
+    \item \textbf{Archivo Dockerfile:} Es la imagen usada en Docker, la cual cuenta con cambios con respecto a la usada en la tarea 1. Los cambios son:
+
+    \begin{enumerate}
+        \item La inclusi\'{o}n de \textit{apk add build-base} y \textit{python3 -m ensurepip}. Estas fueron necesarias para poder instalar Numpy. Inicialmente se ten\'{i}a planeado usar funciones de Numpy para calcular los percentiles, pero al final se decidi\'{o} usar un proceso m\'{a}s manual para esa secci\'{o}n. 
+        \item Adem\'{a}s, se incluy\'{o} \textit{pyyaml y numpy} en la l\'{i}nea de instalacion con pip3. Pyyaml es la libreria seleccionada para transformar los archivos YAML en objectos tipo diccionario que fueron procesados posteriormente para ser convertidos en Spark dataframes.
+    \end{enumerate}
     
-    \item \textbf{Archivo program\_YoksanVarela.py:} Es el programa principal donde se resuelve el problema planteado en la tarea 1.
+    \item \textbf{Archivo tarea2\_program\_YoksanVarela.py:} Es el programa principal donde se resuelve el problema planteado en la tarea 1.
     
 \end{enumerate}
 
@@ -68,9 +75,16 @@ Dentro del archivo comprimido se encuentran, adem\'{a}s de este documento, los s
 A continuaci\'{o}n se listan las decisiones de dise\~{n}o tomadas para el desarrollo de esta soluci\'{o}n:
 
 \begin{enumerate}
-    \item \textbf{Las funciones para lectura de los CSV (read\_csv.py) y manejos de los argumentos a la hora de llamar el c\'{o}digo principal (args\_parser.py) NO tienen pruebas unitarias:} Esto se debe a que la funci\'{o}n de estas funciones es vital para que el c\'{o}digo principal se pueda ejecutar o no, adem\'{a}s de la dificultad de probarlas con elementos de memoria en lugar de archivos reales. Es por eso que el hecho que programa principal pueda ejecutarse es, en s\'{i}, la prueba a esta funciones.
+    \item \textbf{La funci\'{o}n para lectura de los archivos YAML (dentro de yaml\_parser.py), cambio de nombre de los archivos CSV (dentro de tarea2\_program\_YoksanVarela.py) y manejo de los argumentos a la hora de llamar el c\'{o}digo principal (args\_parser.py) NO tienen pruebas unitarias:} Esto se debe a que la funci\'{o}n de estas funciones es vital para que el c\'{o}digo principal se pueda ejecutar o no, adem\'{a}s de la dificultad de probarlas con elementos de memoria en lugar de archivos reales. Es por eso que el hecho que programa principal pueda ejecutarse es, en s\'{i}, la prueba a esta funciones.
 
-    \item \textbf{L\'{i}neas con NaN or NULL en los archivos CSV de entrada fueron descartados:} Esto se realizar en la mayor\'{i}a de los CSV de entrada en alg\'{u}n punto de la ejecuci\'{o}n del programa principal, en especial en el archivo atletas.csv (dado que no hay forma de recuperar la informac\'{i}on de los otros archivos). No obstante, en muchas funciones se incluy\'{o} un manejo de NaN o Null, y estos casos son ejercitados en las pruebas unitarias.
+    \textbf{Nota importante con respecto a la funci\'{o}n de cambio de nombre de los CSV generados por Spark:} Esta es una funci\'{o}n definida dentro del c\'{o}digo MAIN. Como la funci\'{o}n de creaci\'{o}n de archivos CSV de Spark (.coalesce(1).write.csv() para generar solo un archivo CSV por dataframe) crea los archivos con nombres especiales que permiten un mejor manejo a la hora de almacenaje o lectura distribuida, fue necesario crear esta funci\'{o}n para poder cambiarle el nombre a esos archivos y dejarlos como se solicita en el enunciado. Cuando esta funci\'{o}n ya mencionada se utiliza es probable que el archivo copia generado de los originales quede corrupto y su contenido sea solo basura. Es por este problema que se decidi\'{o} hacer un copia con el nombre correcto dentro del folder Results, pero se mantienen los folders temporales con los archivos originales. Estos son:
+    \begin{enumerate}
+        \item Si el archivo \textbf{total\_productos.csv} est\'{a} corrupto, revisar el archivo que empieza con la palabra \textit{part-} dentro de \textbf{./Results/tmp\_prod\_total}
+        \item Si el archivo \textbf{total\_cajas.csv} est\'{a} corrupto, revisar el archivo que empieza con la palabra \textit{part-} dentro de \textbf{./Results/tmp\_cashier\_total}
+        \item Si el archivo \textbf{metricas.csv} est\'{a} corrupto, revisar el archivo que empieza con la palabra \textit{part-} dentro de \textbf{./Results/tmp\_metrics}
+    \end{enumerate}
+
+    \item \textbf{L\'{i}neas con NaN or NULL en el Spark dataframe principal (creado con la contatenaci\'{o}n de cada dataframe por cada archivo YAML) de entrada son removidos antes de la ejecuci\'{o}n del resto de funciones:} Se consider\'{o} que el objectivo de esta tarea no era lidiar con esos elementos, lo cual implica que todas las funciones de apoyo usadas en esta tarea no cuentan con l\'{o}gica para lidiar con NaN NULL (esto ya fue probado en la tarea 1). No obstante, las funciones s\'{i} cuentan con manenjo de errores en el caso de faltar informaci\'{o}n importante, l\'{o}gica que s\'{i} es probada en las pruebas unitarias.
     
     \item \textbf{El uso del ingl\'{e}s en todos los c\'{o}digos:} Aunque parezca trivial, considero importante mencionar esta decisi\'{o}n. De forma personal, me siento m\'{a}s c\'{o}modo programando en ingl\'{e}s (incluyendo comentarios, markdowns, etc.) dada mi experiencia laboral, adem\'{a}s de poder hacer c\'{o}digos legibles de manera universal.
 
@@ -82,26 +96,27 @@ Estos son los pasos para poder ejecutar tanto el c\'{o}digo principal como las p
 \begin{enumerate}
     \item Construir el contenedor:
     \begin{lstlisting}[language=Python]
-    docker build --tag tarea1\_yoksanvarela .
+    docker build --tag tarea2_yoksanvarela .
     \end{lstlisting}
         
-    \item Ejecutar el contenedor:
+    \item Correr el contenedor:
     \begin{lstlisting}[language=Python]
-    docker run -i -t tarea1_yoksanvarela /bin/bash
+    docker run -i -t tarea2_yoksanvarela /bin/bash
     \end{lstlisting}
 
     \item Correr las pruebas unitarias: En la consola del contenedor, ejecutar los siguientes comandos:
     \begin{lstlisting}[language=Python]
-    pytest unitary_tests/test_data_integrity.py
+    pytest unitary_tests/test_yaml_parser.py
     pytest unitary_tests/test_data_transformation.py
-    pytest unitary_tests/test_data_analysis.py
+    pytest unitary_tests/test_data_metrics.py
     \end{lstlisting}
 
-    \item Correr el programa principal: En la consola del contenedor, ejecutar el siguiente comando (es una sola l\'{i}nea:
+    \item Correr el programa principal: En la consola del contenedor, ejecutar el siguiente comando (es una sola l\'{i}ne):
     \begin{lstlisting}[language=Python]
-    spark-submit program_YoksanVarela.py ./datasets/atletas.csv 
-    ./datasets/nadar.csv ./datasets/correr.csv
+    spark-submit tarea2_program_YoksanVarela.py ./datasets
     \end{lstlisting}
+
+    \item Revisar los archivos CSV generador por el c\'{o}digo: Revisar los archivos en el folder \textit{Results} creado luego de la ejecuci\'{o}n del programa principal.
 
 \end{enumerate}
 
@@ -111,58 +126,71 @@ Las funciones usadas a lo largo del programa principal est\'{a}n contenidas en 5
 \begin{itemize}
     \item \textbf{Funci\'{o}n en args\_parser.py:}
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} ArgParser()
-            \item \textbf{Descripci\'{o}n:} Se encarga de procesar los argumentos que se pasan a la hora de ejecutar el c\'{o}digo principal, los cuales son los tres archivos CSV, el retornar el nombre de los archivos.
+            \item \textbf{Funci\'{o}n:} yaml\_files\_loader()
+            \item \textbf{Descripci\'{o}n:} Se encarga de procesar el argumento que se pasa a la hora de ejecutar el c\'{o}digo principal, el directorio donde est\'{a}n almacenados los archivos YAML. A la salida de esta funci\'{o}n se retornan el directorio en s\'{i} y un arreglo de Python que contiene todos los nombres de los archivos YAML encontrados en el directorio.
             \item \textbf{Pruebas Unitarias:} Ninguna.
         \end{itemize}
 
-    \item \textbf{Funci\'{o}n en read\_csv.py:}
+    \item \textbf{Funci\'{o}n en yaml\_parser.py:}
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} read\_csv(csv\_file\_name)
-            \item \textbf{Descripci\'{o}n:} Crea un dataframe usando el archivo que se pasa como par\'{a}metro. Se escoje el schema correcto dependiendo del nombre del archivo, de manera que es una funci\'{o}n \'{u}nica para la carga de los tres archivos solicitados.
+            \item \textbf{Funci\'{o}n:} yaml\_file\_parser(yaml\_file)
+            \item \textbf{Descripci\'{o}n:} Recibe un archivo YAML y retorna un objeto YAML que es, escencialmente, un diccionario de Python.
             \item \textbf{Pruebas Unitarias:} Ninguna.
         \end{itemize}
-
-    \item \textbf{Funciones en data\_integrity.py:}
+        
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} clean\_nan(dataframe)
-            \item \textbf{Descripci\'{o}n:} Elimina las l\'{i}neas que contengan NaN or NULL del dataframe que se pase por par\'{a}metro. El dataframe resultante es retornado.
-            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_integrity.py:
+            \item \textbf{Funci\'{o}n:} yaml\_to\_spark\_df(yaml\_data)
+            \item \textbf{Descripci\'{o}n:} Esta funci\'{o} va a tomar un objecto YAML y convertirlo en un Spark dataframe. La forma en la que lo hace es desempacando el diccionario de forma manual, y usando unos contadores para llevar la cantidad de compras y productos por caja registradora. Al final se retorna un dataframe con las siguientes columnas: \textit{Numero\_Caja}, \textit{Numero\_Compra}, \textit{Numero\_Producto}, \textit{Nombre}, \textit{Cantidad} y \textit{Precio}, o bien, se retorna un FAIL de no poder realizarse este proceso.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_yaml\_parser.py:
                 \begin{itemize}
-                    \item \textbf{test\_remove\_rows\_nan(spark\_session):} Verifica que las l\'{i}neas con NULL sean removidas.
+                    \item \textbf{test\_create\_spark\_df(spark\_session):} Usando un YAML string se ejercita la creaci\'{o}n de un Spark dataframe.
+                    \item \textbf{test\_no\_numero\_caja(spark\_session):} Prueba el modo de fallo al faltar el n\'{u}mero de caja.
+                    \item \textbf{test\_no\_all\_sections(spark\_session):} Prueba el modo de fallo al faltar alguna de las secciones requeridas durante el desempacado.
+                \end{itemize}
+        \end{itemize}
+
+    \item \textbf{Funciones en data\_metrics.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} max\_min\_sell(dataframe)
+            \item \textbf{Descripci\'{o}n:} Retorna los n\'{u}meros de las cajas registradoras donde se vendi\'{o} m\'{a}s y menos, respectivamente. Se retorna un FAIL en caso que este proceso no se pueda realizar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_metrics.py:
+                \begin{itemize}
+                    \item \textbf{test\_max\_values(spark\_session):} Verifica el retorno de las caja con mayor ventas y con menor ventas.
+                    \item \textbf{test\_max\_values\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
                 \end{itemize}
         \end{itemize}
 
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} date\_format(date,formats)
-            \item \textbf{Descripci\'{o}n:} Transforma una fecha provista en el par\'{a}metro date en YYY-MM-DD. Soporta los formatos de fechas definidos en la lista formats que es recibida como par\'{a}metro tambi\'{e}n. El dataframe resultante es retornado.
-            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_integrity.py:
+            \item \textbf{Funci\'{o}n:} most\_sold\_product(dataframe)
+            \item \textbf{Descripci\'{o}n:} Retorna cual el producto que m\'{a}s se vendi\'{o} entre todas las cajas. Se retorna un FAIL en caso que este proceso no se pueda realizar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_metrics.py:
                 \begin{itemize}
-                    \item \textbf{test\_correct\_date(spark\_session):} Verifica en un datraframe con diferentes formatos de fechas se retorne un dataframe con el formato de fecha deseado.
+                    \item \textbf{test\_most\_sold\_product(spark\_session):} Verifica el retorno del producto que m\'{a}s se vendi\'{o}.
+                    \item \textbf{test\_most\_sold\_product\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} most\_profit\_by\_product(dataframe)
+            \item \textbf{Descripci\'{o}n:} Retorna cual el producto que gener\'{o} la mayor cantidad de ganancias o dinero por ventas. Se retorna un FAIL en caso que este proceso no se pueda realizar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_metrics.py:
+                \begin{itemize}
+                    \item \textbf{test\_most\_profit(spark\_session):} Verifica el retorno del producto que m\'{a}s ganancias gener\'{o}.
+                    \item \textbf{test\_most\_profit\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} percentiles(dataframe)
+            \item \textbf{Descripci\'{o}n:} Retorna las ventas puntuales (en dinero) que representan los percentiles 25, 50 y 75. Para hacer este c\'{a}lculo, se eligi\'{o} un proceso en donde se lee la cantidad total de l\'{i}neas del dataframe, se divide es numero en 4 y se convierte al entero m\'{a}s cercano, y luego se retornan los valores de los percentiles de acuerdo a ese \'{i}ndice, de la siguiente forma: percentil 25 es el valor del \'{i}ndice como tal, el 50 es multiplicando ese \'{i}ndice por 2 y el 75 es multiplicando ese \'{i}ndice por 3. Se retornan esos tres valores indexados o bien un FAIL si el proceso no se pudo completar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_metrics.py:
+                \begin{itemize}
+                    \item \textbf{test\_percentile\_calculation(spark\_session):} Verifica correcto retorno de los valores que representan los percentiles deseados.
+                    \item \textbf{test\_percentile\_calculation\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
                 \end{itemize}
         \end{itemize}
 
     \item \textbf{Funciones en data\_transformation.py:}
-        \begin{itemize}
-            \item \textbf{Funci\'{o}n:} dataframe\_joiner\_byEmail(dataframe1, dataframe2)
-            \item \textbf{Descripci\'{o}n:} Hace un Join de los dos diferentes dataframes que entran como par\'{a}metros usando dos columnas en espec\'{i}fico para el join: Correo\_Electronico y Correo\_Electronico\_Atleta. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar el join.
-            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
-                \begin{itemize}
-                    \item \textbf{test\_dataframe\_joiner\_byEmail(spark\_session):} Verifica la uni\'{o}n exitosa de dos dataframes con las mismas columnas.
-                    \item \textbf{test\_dataframe\_joiner\_notSameColumns(spark\_session):} Prueba la prevenci\'{o}n del caso donde alguna de las dos columnas con la que se hace el join no est\'{a} presente.
-                \end{itemize}
-        \end{itemize}
-
-        \begin{itemize}
-            \item \textbf{Funci\'{o}n:} keep\_columns(dataframe)
-            \item \textbf{Descripci\'{o}n:} Elimina todas las columnas del dataframe por par\'{a}metro que no son de inter\'{e}s, manteniendo solamente  Correo\_Electronico, Distancia\_Total\_(m) y Fecha. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar este proceso debido a que alguna de las columnas importantes no est\'{a} presente.
-            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
-                \begin{itemize}
-                    \item \textbf{test\_keep\_important\_columns(spark\_session):} Verifica que se mantengan las columnas de inter\'{e}s.
-                    \item \textbf{test\_keep\_missing\_columns(spark\_session):} Prueba la prevenci\'{o}n del caso donde falta alguna de las columnas importantes.
-                \end{itemize}
-        \end{itemize}
-
         \begin{itemize}
             \item \textbf{Funci\'{o}n:} dataframe\_union(dataframe1, dataframe2)
             \item \textbf{Descripci\'{o}n:} Aplica un Union entre los dos dataframes en los par\'{a}metros, siempre y cuando ambos dataframes tengan las mismas columnas. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar este proceso debido a que alguna de las columnas importantes no est\'{a} presente.
@@ -174,29 +202,22 @@ Las funciones usadas a lo largo del programa principal est\'{a}n contenidas en 5
         \end{itemize}
 
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} aggregate\_by\_email\_date(dataframe)
-            \item \textbf{Descripci\'{o}n:} Hace groupBy en el dataframe con base a las columnas Correo\_Electronico\_Atleta y Fecha. Durante el agrupamiento, el c\'{o}digo suma todas las distancias totales y cuenta la cantidad de veces que aparece el mismo correo electr\'{o}nico. Finalmente, crea la columna Distancia\_promedio\_dia(m) de manera manual al dividir la distancia total entre el conteo de correos, para  luego eliminar las l\'{i}neas con NaN y NULL. Retorna el dataframe resultante o el un estado de FAIL en el caso de que el proceso no se pueda realizar.
+            \item \textbf{Funci\'{o}n:} product\_count(dataframe)
+            \item \textbf{Descripci\'{o}n:} Esta funci\'{o}n hace una agrupaci\'{o}n usando el nombre del producto y agrega la cantidad del producto, generando una columna con la cantidad total vendida del producto entre todas las cajas registradoras. Luego el dataframe se ordena de forma descendente con respecto a la cantidad total calculada y se retorna dicho dataframe. Se retorna FAIL si este proceso no es completado con \'{e}xito.
             \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
                 \begin{itemize}
-                    \item \textbf{test\_aggr\_by\_email\_date(spark\_session):} Verifica que el proceso de agregaci\'{o}n se complete de forma correcta y el c\'{a}lculo del promedio.
-                    \item \textbf{test\_aggr\_NaN\_value(spark\_session):} Comprueba el manejo de NaN o NULL en columnas que no se usan para durante el proceso de groupBy.
-                    \item \textbf{test\_aggr\_missing\_date (spark\_session):} Comprueba el manejo del fallo si la columna Fecha no existe para el proceso de groupBy, y c\'{o}mo afecta esto al c\'{a}lculo del promedio por d\'{i}a.
-                    \item \textbf{test\_aggr\_using\_Null(spark\_session):} Comprueba el manejo de NaN o NULL en la columna Fecha que se usa durante el proceso de groupBy, y c\'{o}mo afecta esto al c\'{a}lculo del promedio por d\'{i}a.
-                     \item \textbf{test\_aggr\_average(spark\_session):} Comprueba el c\'{a}lculo del promedio por d\'{i}a de manera m\'{a}s rigurosa.
+                    \item \textbf{test\_product\_count\_correct\_sum(spark\_session):} Verifica que el proceso de agrupaci\'{o}n se complete de forma correcta y el c\'{a}lculo la cantidad este bien.
+                    \item \textbf{test\_product\_count\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
                 \end{itemize}
         \end{itemize}
 
-    \item \textbf{Funci\'{o}n en data\_analysis.py:}
         \begin{itemize}
-            \item \textbf{Funci\'{o}n:} top\_athletes\_totalDistance\_perCountry(dataframe)
-            \item \textbf{Descripci\'{o}n:} Hace un groupBy por Nombre y Pais, el cual suma la distancia total y los promedios por d\'{i}a durante el agrupamiento. Retorna el dataframe resultante o el un estado de FAIL en el caso de que el proceso no se pueda realizar.
-            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_analysis.py:
+            \item \textbf{Funci\'{o}n:} cashier\_total\_sell(dataframe)
+            \item \textbf{Descripci\'{o}n:} Esta funci\'{o}n agrega una columna con el c\'{a}lculo del total vendido (cantidad multiplicado por precio) y luego hace una agrupaci\'{o}n usando el n\'{u}mero de cajas, lo cual provoca una agregaci\'{i}on de la suma de todos los totales vendidos. Al final se ordena el dataframe de form descendiente con respecto al total vendido y se retorna dicho dataframe. Se retorna FAIL si este proceso no es completado con \'{e}xito.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
                 \begin{itemize}
-                    \item \textbf{test\_top\_athletes\_total\_distance\_oneCountry(spark\_session):} Verifica la agrupaci\'{i}on pero para el caso donde solo hay un pa\'{i}s.
-                    \item \textbf{test\_top\_athletes\_total\_distance\_moreCountries(spark\_session):} Verifica la agrupaci\'{i}on con m\'{a}s de un pa\'{i}s.
-                    \item \textbf{test\_top\_athletes\_total\_distance\_null(spark\_session):} Para probar el comportamiento del c\'{o}digo cuando hay NULL en los datos que se suman.
-                    \item \textbf{test\_top\_athletes\_group\_null(spark\_session):} Para probar el comportamiento del c\'{o}digo cuando hay NULL en los datos que se usan durante el groupBy.
-                    \item \textbf{test\_top\_athletes\_missingColumn(spark\_session):} Para comprobar el modo de fallo del c\'{o}digo cuando falta una columna que se usa durante el groupBy.
+                    \item \textbf{test\_cashier\_total\_sell\_correct\_sum(spark\_session):} Verifica que el proceso de agrupaci\'{o}n se complete de forma correcta y el c\'{a}lculo la suma este bien.
+                    \item \textbf{test\_cashier\_total\_sell\_missing\_column(spark\_session):} Verifica el modo de fallo cuando alguna de las columns importantes para el c\'{a}lculo no est\'{a} presente.
                 \end{itemize}
         \end{itemize}
     
