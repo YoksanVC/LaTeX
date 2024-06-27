@@ -1,0 +1,205 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[top=1.25in, bottom=1.25in, left=1in, right=1in]{geometry}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{Python}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\begin{document}
+\begin{center}
+\large{TAREA 1 - APRENDIENDO SPARK - BIG DATA}\\
+\small{Estudiante: Yoksan Varela Cambronero}\\
+\small{20 de Junio, 2024}
+\end{center}
+
+\section{Contenido del archivo comprimido}
+Dentro del archivo comprimido se encuentran, adem\'{a}s de este documento, los siguientes elementos:
+\begin{enumerate}
+    \item \textbf{Folder datasets:} Contiene los tres archivos solicitados en la secci\'{o}n "Datos de Entrada" del enunciado de la tarea. Estos fueron creados usando ChatGPT, y los mismos cuentan con algunos espacios vac\'{i}os seleccionados de forma aleatoria por parte de la AI a manera de emular posibles problemas a la hora de la manipulaci\'{o}n de datos.
+
+    El archivo \textit{atletas.csv} cuenta con 50 diferentes atletas. Para poder ejercitar los c\'{o}digos usados en esta tarea, el archivo \textit{correr.csv} cuenta con 212 registros, y \textit{nadar.csv} contiene 180 registros.
+    
+    \item \textbf{Folder library:} Este folder contiene 5 archivos de Python que contienen todas funciones utilizadas a lo largos del c\'{o}digo MAIN. En la secci\'{o}n \textit{Funciones y sus respectivas Prueba Unitarias} de este documento se explica con m\'{a}s detalle las funciones y las pruebas unitarias asociadas a las mismas. 
+    
+    \item \textbf{Folder unitary\_tests:} De firma an\'{a}loga al folder anterior, en este se almacenan todas las pruebas unitarias para las funciones mencionadas anteriormente. Para m\'{a}s informaci\'{o}n detallada sobre estas funciones, referirse a la secci\'{o}n \textit{Funciones y sus respectivas Prueba Unitarias}.
+    
+    \item \textbf{Archivo Big Data - Tarea 1.pdf:} Enunciado de la tarea provisto por el profesor.
+    
+    \item \textbf{Archivo build\_run\_docker.bat:} Este documento fue creado para facilitar la creaci\'{o}n y la ejecuci\'{o}n del contenedor de Docker en mi computadora personal, la cual cuenta con el OS Windows 11. Internamente, este archivo tiene las siguentes l\'{i}neas: \textit{ docker build --tag tarea1\_yoksanvarela .} y \textit{ docker run -i -t tarea1\_yoksanvarela /bin/bash}.
+    
+    \item \textbf{Archivo command\_list.txt:} Es un archivo plano de texto que contiene las l\'{i}neas necesarias para poder correr el programa principal y las pruebas unitarias. Cabe la pena rescatar que estos comandos hay que correrlos de forma manual en la consola del contenedor de Docker, y son los mismos comandos que se citan en la secci\'{o}n \textit{Ejecuci\'{o}n del MAIN y las Pruebas Unitarias}.
+    
+    \item \textbf{Archivo Dockerfile:} Es la imagen usada en Docker, misma imagen provista por el profesor.
+    
+    \item \textbf{Archivo program\_YoksanVarela.py:} Es el programa principal donde se resuelve el problema planteado en la tarea 1.
+    
+\end{enumerate}
+
+\section{Decisiones de dise\~{n}o de la soluci\'{o}n}
+A continuaci\'{o}n se listan las decisiones de dise\~{n}o tomadas para el desarrollo de esta soluci\'{o}n:
+
+\begin{enumerate}
+    \item \textbf{Las funciones para lectura de los CSV (read\_csv.py) y manejos de los argumentos a la hora de llamar el c\'{o}digo principal (args\_parser.py) NO tienen pruebas unitarias:} Esto se debe a que la funci\'{o}n de estas funciones es vital para que el c\'{o}digo principal se pueda ejecutar o no, adem\'{a}s de la dificultad de probarlas con elementos de memoria en lugar de archivos reales. Es por eso que el hecho que programa principal pueda ejecutarse es, en s\'{i}, la prueba a esta funciones.
+
+    \item \textbf{L\'{i}neas con NaN or NULL en los archivos CSV de entrada fueron descartados:} Esto se realizar en la mayor\'{i}a de los CSV de entrada en alg\'{u}n punto de la ejecuci\'{o}n del programa principal, en especial en el archivo atletas.csv (dado que no hay forma de recuperar la informac\'{i}on de los otros archivos). No obstante, en muchas funciones se incluy\'{o} un manejo de NaN o Null, y estos casos son ejercitados en las pruebas unitarias.
+    
+    \item \textbf{El uso del ingl\'{e}s en todos los c\'{o}digos:} Aunque parezca trivial, considero importante mencionar esta decisi\'{o}n. De forma personal, me siento m\'{a}s c\'{o}modo programando en ingl\'{e}s (incluyendo comentarios, markdowns, etc.) dada mi experiencia laboral, adem\'{a}s de poder hacer c\'{o}digos legibles de manera universal.
+
+    Esta pr\'{a}ctica podr\'{i}a dar pie a pensar que esta soluci\'{o}n podr\'{i}a ser un plagio o que fue desarrollada por otra persona, pero hago constar que el total de esta entrega fue desarrollado por mi persona.
+\end{enumerate}
+
+\section{Ejecuci\'{o}n del MAIN y las Pruebas Unitarias}
+Estos son los pasos para poder ejecutar tanto el c\'{o}digo principal como las pruebas unitarias:
+\begin{enumerate}
+    \item Construir el contenedor:
+    \begin{lstlisting}[language=Python]
+    docker build --tag tarea1\_yoksanvarela .
+    \end{lstlisting}
+        
+    \item Ejecutar el contenedor:
+    \begin{lstlisting}[language=Python]
+    docker run -i -t tarea1_yoksanvarela /bin/bash
+    \end{lstlisting}
+
+    \item Correr las pruebas unitarias: En la consola del contenedor, ejecutar los siguientes comandos:
+    \begin{lstlisting}[language=Python]
+    pytest unitary_tests/test_data_integrity.py
+    pytest unitary_tests/test_data_transformation.py
+    pytest unitary_tests/test_data_analysis.py
+    \end{lstlisting}
+
+    \item Correr el programa principal: En la consola del contenedor, ejecutar el siguiente comando (es una sola l\'{i}nea:
+    \begin{lstlisting}[language=Python]
+    spark-submit program_YoksanVarela.py ./datasets/atletas.csv 
+    ./datasets/nadar.csv ./datasets/correr.csv
+    \end{lstlisting}
+
+\end{enumerate}
+
+\section{Funciones y sus respectivas Prueba Unitarias}
+Las funciones usadas a lo largo del programa principal est\'{a}n contenidas en 5 archivos dentro de la carpeta \textit{library}. Las pruebas unitarias est\'{a}n contenidas en 3 archivos dentro de la carpeta \textit{unitary\_tests}. A continuaci\'{o}n se explican todas las funciones:
+
+\begin{itemize}
+    \item \textbf{Funci\'{o}n en args\_parser.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} ArgParser()
+            \item \textbf{Descripci\'{o}n:} Se encarga de procesar los argumentos que se pasan a la hora de ejecutar el c\'{o}digo principal, los cuales son los tres archivos CSV, el retornar el nombre de los archivos.
+            \item \textbf{Pruebas Unitarias:} Ninguna.
+        \end{itemize}
+
+    \item \textbf{Funci\'{o}n en read\_csv.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} read\_csv(csv\_file\_name)
+            \item \textbf{Descripci\'{o}n:} Crea un dataframe usando el archivo que se pasa como par\'{a}metro. Se escoje el schema correcto dependiendo del nombre del archivo, de manera que es una funci\'{o}n \'{u}nica para la carga de los tres archivos solicitados.
+            \item \textbf{Pruebas Unitarias:} Ninguna.
+        \end{itemize}
+
+    \item \textbf{Funciones en data\_integrity.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} clean\_nan(dataframe)
+            \item \textbf{Descripci\'{o}n:} Elimina las l\'{i}neas que contengan NaN or NULL del dataframe que se pase por par\'{a}metro. El dataframe resultante es retornado.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_integrity.py:
+                \begin{itemize}
+                    \item \textbf{test\_remove\_rows\_nan(spark\_session):} Verifica que las l\'{i}neas con NULL sean removidas.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} date\_format(date,formats)
+            \item \textbf{Descripci\'{o}n:} Transforma una fecha provista en el par\'{a}metro date en YYY-MM-DD. Soporta los formatos de fechas definidos en la lista formats que es recibida como par\'{a}metro tambi\'{e}n. El dataframe resultante es retornado.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_integrity.py:
+                \begin{itemize}
+                    \item \textbf{test\_correct\_date(spark\_session):} Verifica en un datraframe con diferentes formatos de fechas se retorne un dataframe con el formato de fecha deseado.
+                \end{itemize}
+        \end{itemize}
+
+    \item \textbf{Funciones en data\_transformation.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} dataframe\_joiner\_byEmail(dataframe1, dataframe2)
+            \item \textbf{Descripci\'{o}n:} Hace un Join de los dos diferentes dataframes que entran como par\'{a}metros usando dos columnas en espec\'{i}fico para el join: Correo\_Electronico y Correo\_Electronico\_Atleta. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar el join.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
+                \begin{itemize}
+                    \item \textbf{test\_dataframe\_joiner\_byEmail(spark\_session):} Verifica la uni\'{o}n exitosa de dos dataframes con las mismas columnas.
+                    \item \textbf{test\_dataframe\_joiner\_notSameColumns(spark\_session):} Prueba la prevenci\'{o}n del caso donde alguna de las dos columnas con la que se hace el join no est\'{a} presente.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} keep\_columns(dataframe)
+            \item \textbf{Descripci\'{o}n:} Elimina todas las columnas del dataframe por par\'{a}metro que no son de inter\'{e}s, manteniendo solamente  Correo\_Electronico, Distancia\_Total\_(m) y Fecha. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar este proceso debido a que alguna de las columnas importantes no est\'{a} presente.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
+                \begin{itemize}
+                    \item \textbf{test\_keep\_important\_columns(spark\_session):} Verifica que se mantengan las columnas de inter\'{e}s.
+                    \item \textbf{test\_keep\_missing\_columns(spark\_session):} Prueba la prevenci\'{o}n del caso donde falta alguna de las columnas importantes.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} dataframe\_union(dataframe1, dataframe2)
+            \item \textbf{Descripci\'{o}n:} Aplica un Union entre los dos dataframes en los par\'{a}metros, siempre y cuando ambos dataframes tengan las mismas columnas. El dataframe resultante es retornado, o bien, un estado de FAIL si no es capaz de realizar este proceso debido a que alguna de las columnas importantes no est\'{a} presente.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
+                \begin{itemize}
+                    \item \textbf{test\_concatenate\_same\_columns(spark\_session):} Verifica una uni\'{o}n exitosa de dos dataframes con las mismas columnas.
+                    \item \textbf{test\_concatenate\_different\_columns(spark\_session):} Prueba la prevenci\'{o}n del caso donde las columnas no son las mismas.
+                \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} aggregate\_by\_email\_date(dataframe)
+            \item \textbf{Descripci\'{o}n:} Hace groupBy en el dataframe con base a las columnas Correo\_Electronico\_Atleta y Fecha. Durante el agrupamiento, el c\'{o}digo suma todas las distancias totales y cuenta la cantidad de veces que aparece el mismo correo electr\'{o}nico. Finalmente, crea la columna Distancia\_promedio\_dia(m) de manera manual al dividir la distancia total entre el conteo de correos, para  luego eliminar las l\'{i}neas con NaN y NULL. Retorna el dataframe resultante o el un estado de FAIL en el caso de que el proceso no se pueda realizar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_transformation.py:
+                \begin{itemize}
+                    \item \textbf{test\_aggr\_by\_email\_date(spark\_session):} Verifica que el proceso de agregaci\'{o}n se complete de forma correcta y el c\'{a}lculo del promedio.
+                    \item \textbf{test\_aggr\_NaN\_value(spark\_session):} Comprueba el manejo de NaN o NULL en columnas que no se usan para durante el proceso de groupBy.
+                    \item \textbf{test\_aggr\_missing\_date (spark\_session):} Comprueba el manejo del fallo si la columna Fecha no existe para el proceso de groupBy, y c\'{o}mo afecta esto al c\'{a}lculo del promedio por d\'{i}a.
+                    \item \textbf{test\_aggr\_using\_Null(spark\_session):} Comprueba el manejo de NaN o NULL en la columna Fecha que se usa durante el proceso de groupBy, y c\'{o}mo afecta esto al c\'{a}lculo del promedio por d\'{i}a.
+                     \item \textbf{test\_aggr\_average(spark\_session):} Comprueba el c\'{a}lculo del promedio por d\'{i}a de manera m\'{a}s rigurosa.
+                \end{itemize}
+        \end{itemize}
+
+    \item \textbf{Funci\'{o}n en data\_analysis.py:}
+        \begin{itemize}
+            \item \textbf{Funci\'{o}n:} top\_athletes\_totalDistance\_perCountry(dataframe)
+            \item \textbf{Descripci\'{o}n:} Hace un groupBy por Nombre y Pais, el cual suma la distancia total y los promedios por d\'{i}a durante el agrupamiento. Retorna el dataframe resultante o el un estado de FAIL en el caso de que el proceso no se pueda realizar.
+            \item \textbf{Pruebas Unitarias:} En el archivo test\_data\_analysis.py:
+                \begin{itemize}
+                    \item \textbf{test\_top\_athletes\_total\_distance\_oneCountry(spark\_session):} Verifica la agrupaci\'{i}on pero para el caso donde solo hay un pa\'{i}s.
+                    \item \textbf{test\_top\_athletes\_total\_distance\_moreCountries(spark\_session):} Verifica la agrupaci\'{i}on con m\'{a}s de un pa\'{i}s.
+                    \item \textbf{test\_top\_athletes\_total\_distance\_null(spark\_session):} Para probar el comportamiento del c\'{o}digo cuando hay NULL en los datos que se suman.
+                    \item \textbf{test\_top\_athletes\_group\_null(spark\_session):} Para probar el comportamiento del c\'{o}digo cuando hay NULL en los datos que se usan durante el groupBy.
+                    \item \textbf{test\_top\_athletes\_missingColumn(spark\_session):} Para comprobar el modo de fallo del c\'{o}digo cuando falta una columna que se usa durante el groupBy.
+                \end{itemize}
+        \end{itemize}
+    
+\end{itemize}
+
+\end{document}
